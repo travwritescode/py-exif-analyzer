@@ -1,17 +1,24 @@
 import exifread
 import pprint
 import pickle
+from pathlib import Path
 from exifread.tags import FIELD_TYPES
 
 
 filename = 'Street Photos 0226 - 2766'
 
 
-def scrapeData(file_path):
-    f = open(file_path, 'rb')
-    image_metadata = exifread.process_file(f)
+def scrapeData(file_list):
+    for file in file_list:
+        f = file.open('rb')
+        metadata_list = exifread.process_file(f)
+    # f = open(file_path, 'rb')
 
-    return image_metadata
+    dict = {}
+    for f in metadata_list:
+        dict[file]
+
+    return metadata_list
 
 
 def trim_metadata(image_metadata):
@@ -46,11 +53,19 @@ def print_metadata(image_metadata):
              #pprint.pprint(FIELD_TYPES[image_metadata[tag].field_type])
 
 
+def import_files():
+    p = Path('E:/2020/0106').resolve()
+    path_list = list(p.glob('**/*.PEF'))
+    return path_list
+
+
 if __name__ == '__main__':
-    exif = scrapeData('Street Photos 0226 - 2766.jpg')
-    pickle_exif_data(exif)
-    unpickled = unpickle_exif_data(filename)
-    print_metadata(unpickled)
+    files = import_files()
+    metadata_list = scrapeData(files)
+    # exif = scrapeData('Street Photos 0226 - 2766.jpg')
+    # pickle_exif_data(exif)
+    # unpickled = unpickle_exif_data(filename)
+    # print_metadata(unpickled)
 
 
 
