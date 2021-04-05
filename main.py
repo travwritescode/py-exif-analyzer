@@ -9,7 +9,7 @@ PICKLE_STORE_PATH = './pickle_store/'
 
 
 def scrapeData(file_list):
-    '''
+    """
     Scrape exif data from a list of files
 
     Parameters
@@ -22,7 +22,7 @@ def scrapeData(file_list):
     dict
         Dictionary with file names as the keys and the scraped
         exif metadata as values
-    '''
+    """
     metadata_dict = {}
     for file in file_list:
         f = file.open('rb')
@@ -33,7 +33,7 @@ def scrapeData(file_list):
 
 
 def pickle_exif_data(store):
-    '''
+    """
     Uses Python built-ni pickle library to serialize dictionaries
     for future storage in a database
 
@@ -42,7 +42,7 @@ def pickle_exif_data(store):
     store : dict
         Dictionary with file names as the keys and the scraped
         exif metadata as values
-    '''
+    """
     for key in store.keys():
         filename = key
         outfile = open('./pickle_store/' + filename, 'wb')
@@ -51,7 +51,7 @@ def pickle_exif_data(store):
 
 
 def unpickle_exif_data():
-    '''
+    """
     De-serializes all pickled files in a directory
 
     Returns
@@ -59,7 +59,7 @@ def unpickle_exif_data():
     loaded_metadata : dict
         Dictionary with file names as the keys and the scraped
         exif metadata as values
-    '''
+    """
     pickles = listdir('./pickle_store/')
     print(pickles)
     for p in pickles:
@@ -70,37 +70,17 @@ def unpickle_exif_data():
 
 
 def import_files():
-    '''
+    """
     Imports all files of type .PEF from a directory
 
     Returns
     ----------
     path_list : list
          List of strings representing each file in a directory
-    '''
+    """
     p = Path('E:/2020/0106').resolve()
     path_list = list(p.glob('**/*.PEF'))
     return path_list
-
-
-if __name__ == '__main__':
-    # files = import_files()
-    # dict_store = scrapeData(files)
-    # exif = scrapeData('Street Photos 0226 - 2766.jpg')
-    # pickle_exif_data(dict_store)
-    unpickled = unpickle_exif_data(filename)
-    print_metadata(unpickled)
-
-
-
-
-
-'''
-ExposureTime
-FNumber
-ISOSpeedRatings
-FocalLength
-'''
 
 def print_metadata(image_metadata):
     #print(type(image_metadata))
@@ -113,6 +93,39 @@ def print_metadata(image_metadata):
             pprint.pprint("Key: " + image_metadata[tag].printable)
             #pprint.pprint(len(tag))
              #pprint.pprint(FIELD_TYPES[image_metadata[tag].field_type])
+
+
+if __name__ == '__main__':
+    files = import_files()
+    dict_store = scrapeData(files)
+    # exif = scrapeData(dict_store)
+    # pickle_exif_data(dict_store)
+    unpickled = unpickle_exif_data()
+    print_metadata(dict_store)
+
+
+
+
+
+'''
+Image Make
+Image Model
+Image XResolution
+Image YResolution
+Image ResolutionUnit
+Image GPSInfo
+EXIF ExposureTime
+EXIF FNumber
+EXIF ISOSpeedRatings
+EXIF FocalLength
+EXIF DateTimeOriginal
+EXIF ExposureBiasValue
+EXIF ExposureMode
+EXIF WhiteBalance
+EXIF FocalLengthIn35mmFilm
+'''
+
+
 
 def trim_metadata(image_metadata):
     for tag in image_metadata.keys():
