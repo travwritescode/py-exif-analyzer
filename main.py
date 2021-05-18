@@ -82,17 +82,18 @@ def import_files():
     path_list = list(p.glob('**/*.PEF'))
     return path_list
 
+
 def print_metadata(image_metadata):
-    #print(type(image_metadata))
-    #pprint.pprint(image_metadata)
+    # print(type(image_metadata))
+    # pprint.pprint(image_metadata)
 
     for tag in image_metadata.keys():
-        if tag.startswith("EXIF") and tag not in ['EXIF MakerNote']: # if the tag contains EXIF data
-            #  pprint.pprint("field_type: %s, \nprintable: %s, \nKey: %s" % (image_metadata[tag].field_type, tag, image_metadata[tag].printable))
+        if tag.startswith("EXIF") and tag not in ['EXIF MakerNote']:  # if the tag contains EXIF data
+            # pprint.pprint("field_type: %s, \nprintable: %s, \nKey: %s" % (image_metadata[tag].field_type, tag, image_metadata[tag].printable))
             pprint.pprint("Printable: " + tag)
             pprint.pprint("Key: " + image_metadata[tag].printable)
-            #pprint.pprint(len(tag))
-             #pprint.pprint(FIELD_TYPES[image_metadata[tag].field_type])
+            # pprint.pprint(len(tag))
+            # pprint.pprint(FIELD_TYPES[image_metadata[tag].field_type])
 
 
 if __name__ == '__main__':
@@ -102,10 +103,6 @@ if __name__ == '__main__':
     # pickle_exif_data(dict_store)
     unpickled = unpickle_exif_data()
     print_metadata(dict_store)
-
-
-
-
 
 '''
 Image Make
@@ -126,8 +123,7 @@ EXIF FocalLengthIn35mmFilm
 '''
 
 
-
 def trim_metadata(image_metadata):
     for tag in image_metadata.keys():
         pprint.pprint(image_metadata[tag])
-        #print(image_metadata[tag].printable)
+        # print(image_metadata[tag].printable)
